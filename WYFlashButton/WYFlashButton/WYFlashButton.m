@@ -9,6 +9,8 @@
 #import "WYFlashButton.h"
 #import "UIColor+Delta.h"
 
+#define kFloor0AndCeil1(x) (x) < 0 ? 0 : ((x) > 1 ? 1 : (x))
+
 static CGFloat const DefaultSpeed = 1.0;  //默认速度
 static NSUInteger const FramesPerSecond = 60; //动画预期帧数，
 static CGFloat const FlashWidth = 0.3;  //默认的抛光宽度，
@@ -49,6 +51,17 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
     return self;
 }
 
+
+#pragma mark - Override
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.flashLayer.frame = self.bounds;
+}
+
+- (void)dealloc {
+    [self stopAnimation];
+}
+
 #pragma mark - Public
 - (void)startAnimation {
     [self configureView];
@@ -61,12 +74,6 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
     self.displayLink = nil;
 }
 
-
-#pragma mark - Override
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.flashLayer.frame = self.bounds;
-}
 
 #pragma mark - Private
 - (void)configureView {
@@ -90,14 +97,16 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
 - (void)updateTitleColorArray {
     static CGFloat centerLocation = 0;
     
-    centerLocation += self.speed / FramesPerSecond;
-    if(centerLocation >= 1 + self.flashWidth / 2 + IntervalTime) {
-        centerLocation = -self.flashWidth / 2 - IntervalTime;
+    centerLocation += self.speed / self.framesPerSecond;
+    if(centerLocation >= 1 + self.intervalTime) {
+        centerLocation = - self.intervalTime;
     }
     
-    self.flashLayer.locations = @[@(0), @(MAX(0, centerLocation - self.flashWidth / 2)), @(centerLocation < 0 ? 0 : (centerLocation > 1 ? 1 : centerLocation)), @(MIN(1, centerLocation + self.flashWidth / 2)), @1];
+    self.flashLayer.locations = @[@(0), @(kFloor0AndCeil1(centerLocation - self.flashWidth / 2)), @(kFloor0AndCeil1(centerLocation)), @(kFloor0AndCeil1(centerLocation + self.flashWidth / 2)), @1];
     self.flashLayer.colors = [self displayColorArrays];
     
+    
+    NSLog(@"%f,  %@", centerLocation, self.flashLayer.locations);
 }
 
 
@@ -122,6 +131,18 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
     return [self.currentTitleColor darkerColor];
 }
 
+- (CADisplayLink *)displayLink {
+    if(!_displayLink) {
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateTitleColorArray)];
+        if(([[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending)) {
+            _displayLink.preferredFramesPerSecond = self.framesPerSecond;
+        } else {
+            _displayLink.frameInterval = (ceil(60.0 / self.framesPerSecond));
+        }
+    }
+    return _displayLink;
+}
+
 - (CGFloat)speed {
     if(!_speed) {
         return DefaultSpeed;
@@ -138,16 +159,20 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
     }
 }
 
-- (CADisplayLink *)displayLink {
-    if(!_displayLink) {
-        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateTitleColorArray)];
-        if(([[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending)) {
-            _displayLink.preferredFramesPerSecond = FramesPerSecond;
-        } else {
-            _displayLink.frameInterval = (ceil(60.0 / FramesPerSecond));
-        }
+- (NSInteger)framesPerSecond {
+    if(!_framesPerSecond) {
+        return FramesPerSecond;
+    } else {
+        return _framesPerSecond;
     }
-    return _displayLink;
+}
+
+- (CGFloat)intervalTime {
+    if(!_intervalTime) {
+        return IntervalTime * self.speed;
+    } else {
+        return _intervalTime * self.speed;
+    }
 }
 
 @end

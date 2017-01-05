@@ -21,11 +21,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    WYFlashButton *button = [[WYFlashButton alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+    WYFlashButton *button = [[WYFlashButton alloc] initWithFrame:CGRectMake(100, 100, 200, 50)];
     [button setTitle:@"jnkxjaahckajcbkjxabxn" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     button.backgroundColor = [UIColor blueColor];
-    
+    button.framesPerSecond = 30;
+    button.speed = 5;
+    button.intervalTime = 0.1;
     [button startAnimation];
     [self.view addSubview:button];
 }
