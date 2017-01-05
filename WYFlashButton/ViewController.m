@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "WYFlashButton.h"
 
-@interface ViewController ()
+@interface ViewController () {
+    CAGradientLayer *gradientLayer;
+}
 
 @end
 
@@ -17,8 +20,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    WYFlashButton *button = [[WYFlashButton alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+    [button setTitle:@"jnkxjaahckajcbkjxabxn" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor blueColor];
+    
+    [button startAnimation];
+    [self.view addSubview:button];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

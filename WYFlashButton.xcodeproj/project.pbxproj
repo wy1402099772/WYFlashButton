@@ -15,6 +15,8 @@
 		936ACB0F1E1D21E600D858FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 936ACB0D1E1D21E600D858FE /* LaunchScreen.storyboard */; };
 		936ACB1A1E1D21E600D858FE /* WYFlashButtonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 936ACB191E1D21E600D858FE /* WYFlashButtonTests.m */; };
 		936ACB251E1D21E600D858FE /* WYFlashButtonUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 936ACB241E1D21E600D858FE /* WYFlashButtonUITests.m */; };
+		936ACB351E1D227B00D858FE /* WYFlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 936ACB341E1D227B00D858FE /* WYFlashButton.m */; };
+		936ACB381E1DDD7D00D858FE /* UIColor+Delta.m in Sources */ = {isa = PBXBuildFile; fileRef = 936ACB371E1DDD7D00D858FE /* UIColor+Delta.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,10 @@
 		936ACB201E1D21E600D858FE /* WYFlashButtonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WYFlashButtonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		936ACB241E1D21E600D858FE /* WYFlashButtonUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WYFlashButtonUITests.m; sourceTree = "<group>"; };
 		936ACB261E1D21E600D858FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		936ACB331E1D227B00D858FE /* WYFlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYFlashButton.h; sourceTree = "<group>"; };
+		936ACB341E1D227B00D858FE /* WYFlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYFlashButton.m; sourceTree = "<group>"; };
+		936ACB361E1DDD7D00D858FE /* UIColor+Delta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Delta.h"; sourceTree = "<group>"; };
+		936ACB371E1DDD7D00D858FE /* UIColor+Delta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Delta.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,7 @@
 		936ACAFE1E1D21E600D858FE /* WYFlashButton */ = {
 			isa = PBXGroup;
 			children = (
+				936ACB321E1D221F00D858FE /* WYFlashButton */,
 				936ACB021E1D21E600D858FE /* AppDelegate.h */,
 				936ACB031E1D21E600D858FE /* AppDelegate.m */,
 				936ACB051E1D21E600D858FE /* ViewController.h */,
@@ -138,6 +145,17 @@
 				936ACB261E1D21E600D858FE /* Info.plist */,
 			);
 			path = WYFlashButtonUITests;
+			sourceTree = "<group>";
+		};
+		936ACB321E1D221F00D858FE /* WYFlashButton */ = {
+			isa = PBXGroup;
+			children = (
+				936ACB331E1D227B00D858FE /* WYFlashButton.h */,
+				936ACB341E1D227B00D858FE /* WYFlashButton.m */,
+				936ACB361E1DDD7D00D858FE /* UIColor+Delta.h */,
+				936ACB371E1DDD7D00D858FE /* UIColor+Delta.m */,
+			);
+			path = WYFlashButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,7 +291,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				936ACB351E1D227B00D858FE /* WYFlashButton.m in Sources */,
 				936ACB071E1D21E600D858FE /* ViewController.m in Sources */,
+				936ACB381E1DDD7D00D858FE /* UIColor+Delta.m in Sources */,
 				936ACB041E1D21E600D858FE /* AppDelegate.m in Sources */,
 				936ACB011E1D21E600D858FE /* main.m in Sources */,
 			);
@@ -507,6 +527,7 @@
 				936ACB2B1E1D21E600D858FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		936ACB2C1E1D21E600D858FE /* Build configuration list for PBXNativeTarget "WYFlashButtonTests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +536,7 @@
 				936ACB2E1E1D21E600D858FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		936ACB2F1E1D21E600D858FE /* Build configuration list for PBXNativeTarget "WYFlashButtonUITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +545,7 @@
 				936ACB311E1D21E600D858FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
