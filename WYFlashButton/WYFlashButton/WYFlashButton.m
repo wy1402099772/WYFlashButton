@@ -68,6 +68,7 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
 }
 
 - (void)stopAnimation {
+    self.flashLayer.mask = nil;
     [self removeFlash];
     
     [self.displayLink invalidate];
@@ -106,7 +107,7 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
     self.flashLayer.colors = [self displayColorArrays];
     
     
-    NSLog(@"%f,  %@", centerLocation, self.flashLayer.locations);
+//    NSLog(@"%f,  %@", centerLocation, self.flashLayer.locations);
 }
 
 
@@ -124,7 +125,7 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
 }
 
 - (UIColor *)lighterColor {
-    return [self.currentTitleColor lighterColorWithDelta:0.5];
+    return [self.currentTitleColor lighterColorWithDelta:0.3];
 }
 
 - (UIColor *)darkerColor {
