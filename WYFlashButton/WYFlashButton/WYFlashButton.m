@@ -26,6 +26,8 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
 
+@property (nonatomic, assign) CGFloat centerLocation;
+
 @end
 
 @implementation WYFlashButton
@@ -53,9 +55,11 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
 
 
 #pragma mark - Override
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.flashLayer.frame = self.bounds;
+- (void)layoutSubviews {    
+    if(self.flashLayer.superlayer && self.flashLayer.mask) {
+        [super layoutSubviews];
+        self.flashLayer.frame = self.bounds;
+    }
 }
 
 - (void)dealloc {
@@ -72,7 +76,7 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
     [self removeFlash];
     
     [self.displayLink invalidate];
-    self.displayLink = nil;
+//    self.displayLink = nil;
 }
 
 
@@ -96,14 +100,13 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
 
 #pragma mark - ACtion
 - (void)updateTitleColorArray {
-    static CGFloat centerLocation = 0;
     
-    centerLocation += self.speed / self.framesPerSecond;
-    if(centerLocation >= 1 + self.intervalTime) {
-        centerLocation = - self.intervalTime;
+    self.centerLocation += self.speed / self.framesPerSecond;
+    if(self.centerLocation >= 1 + self.intervalTime) {
+        self.centerLocation = - self.intervalTime;
     }
     
-    self.flashLayer.locations = @[@(0), @(kFloor0AndCeil1(centerLocation - self.flashWidth / 2)), @(kFloor0AndCeil1(centerLocation)), @(kFloor0AndCeil1(centerLocation + self.flashWidth / 2)), @1];
+    self.flashLayer.locations = @[@(0), @(kFloor0AndCeil1(self.centerLocation - self.flashWidth / 2)), @(kFloor0AndCeil1(self.centerLocation)), @(kFloor0AndCeil1(self.centerLocation + self.flashWidth / 2)), @1];
     self.flashLayer.colors = [self displayColorArrays];
     
     
@@ -125,11 +128,11 @@ static CGFloat const IntervalTime = 0.2;  //避免两次动画时间间隔太小
 }
 
 - (UIColor *)lighterColor {
-    return [self.currentTitleColor lighterColorWithDelta:0.3];
+    return [self.currentTitleColor lighterColorWithDelta:0.4];
 }
 
 - (UIColor *)darkerColor {
-    return [self.currentTitleColor darkerColor];
+    return [self.currentTitleColor darkerColorWithDelta:0.05];
 }
 
 - (CADisplayLink *)displayLink {
